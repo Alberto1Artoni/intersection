@@ -4,7 +4,10 @@
     make
 
 ## Test
-[![Click to watch the video]](assets/video/CompGeom.mp4)
+
+
+https://github.com/Alberto1Artoni/intersection/assets/36969429/ffca5500-1d2e-4d30-a2fe-b8442187bad0
+
 
 ## TODO:
  - Improve interface
