@@ -4,7 +4,7 @@
     make
 
 ## Test
-[![Click to watch the video]](assets/video/myVideo.mp4)
+[![Click to watch the video]](assets/video/CompGeom.mp4)
 
 ## TODO:
  - Improve interface
