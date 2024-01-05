@@ -3,3 +3,7 @@ obj/*.mod
 
 test/Intersection/DUMP/*
 test/Intersection/VTK/*
+
+bin/INTERSECTION
+
+*.swp
