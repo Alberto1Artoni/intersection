@@ -1,3 +1,4 @@
 1. Improve maintanability and current interface
 2. Add a nice test case. Include options, and relative paths during the initialization
 3. Improve interface with CGAL
+4. Have a look at: https://jacobwilliams.github.io/json-fortran/

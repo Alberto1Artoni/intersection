@@ -1,0 +1,4 @@
+path         /home/alberto/phd/coding/fortran/intersection/test/OpenFOAM/Voronoi2D/
+reader       openfoam
+nameGrid     fluid
+

@@ -34,7 +34,7 @@ subroutine READ_MESH_POLY_OPENFOAM(grid)
     allocate(grid%points(grid%nb_points,3))
     call READ_MESH_POINTS( grid )
 
-    outGrid = "/home/alberto/phd/coding/fortran/intersection/test/Intersection/VTK/"//adjustl(trim(grid%nameGrid))//".vtk"
+    outGrid = "/home/alberto/phd/coding/fortran/intersection/test/Intersection/VTK/"//trim(adjustl(trim(grid%nameGrid)))//".vtk"
     call DUMP_MESH_VTK( grid, outGrid)
 
 

@@ -56,6 +56,10 @@ module MOD_INTERSECTION
 
             toll = (xAMax - xAMin) / 1000.0;
 
+            if (mod( jAcu - start, 25 ).eq.0) then
+                write(*,'(A1,I0,A2,A24,F6.2,A1)') "[",mpi_id,"] ","Intersection progress   ", REAL(jAcu - start) / (end-start)*100, "%"
+            endif
+
             do jFlu=1, nb_elemFlu
 
                 call GET_POLY_BBOX(xFMin,yFMin,zFMin, xFMax, yFMax, zFMax, fluPoly(jFlu))
@@ -71,7 +75,6 @@ module MOD_INTERSECTION
                                            outIntersection, isIntersecting)
 
                     if (isIntersecting) then
-                        write(*,*) "Exporting..."
                         write(filename,'(A,I0,A,I0,A)') './DUMP/acu', jAcu ,"_", jFlu, ".vtk"
                         temp = temp + 1
                         call EXPORT_VTK_POLYDATA_DATA_FAST(filename, outIntersection, jAcu, temp)
@@ -84,6 +87,8 @@ module MOD_INTERSECTION
 
 
         end do
+
+        write(*,'(A1,I0,A2,A27)') "[",mpi_id,"] ","Intersection progress: done!"
 
     end subroutine
 

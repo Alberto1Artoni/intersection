@@ -1,1 +1,1 @@
-mpirun -np 8 /home/alberto/phd/coding/fortran/intersection/bin/INTERSECTION > outIntersection.txt
+mpirun -np 8 /home/alberto/phd/coding/fortran/intersection/bin/INTERSECTION

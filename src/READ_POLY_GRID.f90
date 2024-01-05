@@ -8,8 +8,7 @@ subroutine READ_POLY_GRID(grid)
 
     !!!! @todo cambiare interfaccia introducendo casi
 
-
-    select case (grid%reader)
+    select case ( adjustl(trim(grid%reader)) )
 
        case('openfoam')
            ! TODO: 
