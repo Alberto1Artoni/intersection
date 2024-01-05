@@ -414,15 +414,16 @@ contains
         type(c_ptr) :: conn
         integer(kind=c_int),pointer :: fp(:)
         real(kind=c_double),pointer :: fvx(:), fvy(:), fvz(:)
-        character(5000) :: outString        ! take a sufficiently big string
         logical :: isIntersecting
 
         
+        write(*,*) "call to nef interface"
         call nefInterface(polyAcu%nV, polyAcu%nF, polyAcu%nc, &
                           polyAcu%vx, polyAcu%vy, polyAcu%vz, polyAcu%conn, &
                           polyFlu%nV, polyFlu%nF, polyFlu%nc, &
                           polyFlu%vx, polyFlu%vy, polyFlu%vz, polyFlu%conn, & 
                           nV, nF, nc, vx, vy, vz, conn)
+        write(*,*) "call to nef interface, done!"
 
         if ( nV .eq. -2) then
             write(*,*) "triangulate"

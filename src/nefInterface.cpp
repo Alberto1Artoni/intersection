@@ -5,14 +5,16 @@
 #include <CGAL/boost/graph/convert_nef_polyhedron_to_polygon_mesh.h>
 #include <CGAL/Polygon_mesh_processing/triangulate_faces.h>
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
 typedef CGAL::Simple_cartesian<double> K;
 typedef CGAL::Surface_mesh<K::Point_3> Mesh;
 typedef Mesh::Vertex_index vertex_descriptor;
 typedef Mesh::Face_index face_descriptor;
+
+
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
 typedef CGAL::Exact_predicates_exact_constructions_kernel EK;
 typedef CGAL::Polyhedron_3<EK> Polyhedron;
 typedef CGAL::Surface_mesh<K::Point_3> Surface_mesh;
@@ -219,7 +221,6 @@ void convertPoly( Surface_mesh poly,
     for (int i=2; i<=nF; i++)
     {
         (*conn)[i] = faceSizes[i-2] + (*conn)[i-1] + 1;
-//      std::cout << i << " " << (*conn)[i] << std::endl;
     }
 
     for(face_descriptor fd : poly.faces())
@@ -261,15 +262,17 @@ extern "C" void   nefInterface(
 {
 
 
+
     Polyhedron polyAcu, polyFlu;
     
     std::stringstream ssAcu;
     ssAcu = createPoly(*nVAcu, *nFAcu, *ncAcu, vxAcu, vyAcu, vzAcu, connAcu);
-//  std::cout << "building polyhedron Acoustic element inside nef" << std::endl;
-    ssAcu >> polyAcu;
 
 //  std::cout << "call ssAcu" << std::endl;
 //  std::cout << ssAcu.str() << std::endl;
+
+    ssAcu >> polyAcu;
+//  std::cout << "dump to polyAcu, done!" << std::endl;
 
 
     std::stringstream ssFlu;
