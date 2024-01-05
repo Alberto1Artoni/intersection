@@ -1,23 +1,13 @@
-### Intersections
-
-
 ## Install
 
+make CGAL
 make
 
 
-##
-
-Avere una versione funzionante.
-
 ## TODO:
-
-@@@
- - Implementare vettore di poliedro
- - Migliorare opzioni delle griglie
-
-@@@
- - Continuous Integration
- - Modulo che collezioni tutti gli input dei formati che voglio che vengano letti
+ - Improve interface
+ - Add Continuous Integration
+ - Add other ways to read the grids
+ 
 
     
