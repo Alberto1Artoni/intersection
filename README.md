@@ -1,8 +1,10 @@
 ## Install
 
-make CGAL
-make
+    make CGAL
+    make
 
+## Test
+[![Click to watch the video]](assets/video/myVideo.mp4)
 
 ## TODO:
  - Improve interface
