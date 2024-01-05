@@ -1,0 +1,3 @@
+lib/* linguist-vendored
+src/*.f90 Fortran
+src/*.cpp C++
