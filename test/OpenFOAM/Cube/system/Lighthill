@@ -1,0 +1,11 @@
+    Lighthill
+    {
+        // Mandatory entries (unmodifiable)
+        type            Lighthill;
+        libs ("libuserfieldFunctionObjects.so");
+        field U;
+        executeControl  writeTime;
+        executeInterval 1;
+        writeControl    writeTime;
+        writeInterval   1;
+    }

@@ -1,0 +1,8 @@
+cellSet c0 new boxToCell (-15 -15 0.055) (50 15 0.15) 
+cellSet c0 invert
+cellSet c0 delete boxToCell (-15 -15 0.055) (50 15 0.15)
+
+
+#faceSet f0 new patchToFace back
+#cellSet layer0 new faceToCell f0 any
+

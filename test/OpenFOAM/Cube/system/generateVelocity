@@ -1,0 +1,89 @@
+generateVelocity
+    {
+    name generateVelocity;
+    type coded;
+    libs (utilityFunctionObjects);
+
+
+    // this is necessary in order to make the code run at any time
+    codeExecute
+    #{
+
+    Info << "Running generateVelocity..." << endl;
+    
+    volVectorField U
+    (
+        IOobject
+        (
+            "divLighthill",
+            mesh().time().timeName(),
+            mesh(),
+            IOobject::NO_READ,
+            IOobject::AUTO_WRITE
+        ),
+        mesh(),
+        dimVelocity
+    );
+
+    Info<< "\nEvaluating analytical solution" << endl;
+
+    const volVectorField& centres = U.mesh().C();
+    
+    // parametri rv, rc
+    scalar x,y,z,pi, ne;
+
+    scalar h,xmin,xmax,ymin,ymax,zmin,zmax, hc;
+
+    pi = atan(1.0)*4.0;
+
+    ne = 128;
+    h  =  1 / ne;
+    hc =  h /  2.0;
+
+    forAll(U, cellI)
+    {
+        // if outside the positive vortex
+        x = centres[cellI].x();
+        y = centres[cellI].y();
+        z = centres[cellI].z();
+        
+        xmin = x-hc;
+        xmax = x+hc;
+        ymin = y-hc;
+        ymax = y+hc;
+        zmin = z-hc;
+        zmax = z+hc;
+    
+
+   //   U[cellI].x() =   ((xmax*xmax*xmax - xmin*xmin*xmin)/3.0 - (xmax-xmin)) / (h) ;
+
+        U[cellI].x() =   x*x+y*y+z*z; 
+        U[cellI].y() =   y;
+        U[cellI].z() =   z;
+
+    }
+    
+    forAll(U.boundaryField(), patchI)
+    {
+        fvPatchField<vector>& pU = U.boundaryFieldRef()[patchI];
+        const fvPatch& centresFaces = U.mesh().boundary()[patchI];
+
+        forAll(pU, faceI)
+        {
+            x = centresFaces.Cf()[faceI].x();
+            y = centresFaces.Cf()[faceI].y();
+            z = centresFaces.Cf()[faceI].z();
+
+            pU[faceI].x() =  x*x+y*y+z*z;
+            pU[faceI].y() =  y;
+            pU[faceI].z() =  z;
+        }
+    } 
+
+
+    U.write();
+        
+
+    #};
+
+    }

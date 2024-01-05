@@ -1,0 +1,25 @@
+ensightWrite
+{
+    type            ensightWrite;
+    libs            (utilityFunctionObjects);
+    writeControl    timeStep;
+    writeInterval   1;
+    format          ascii;
+
+    internal        true;
+    overwrite       true;
+    width           8;
+
+    fields          (divLighthill);
+
+    selection
+    {
+        box
+        {
+            action  add;
+            source  box;
+            box     (-1.5 -1.5 -1.5) (1.5 1.5 1.5);
+        }
+    }
+}
+

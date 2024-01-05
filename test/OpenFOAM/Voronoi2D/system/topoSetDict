@@ -1,0 +1,71 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7  
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+actions
+(
+    {
+        name        diffuseInterface;
+        type        cellSet;
+        action      new;
+        source      surfaceToCell;
+        sourceInfo
+        {
+            file            "constant/triSurface/cylinder.stl";
+            outsidePoints   ((-1 -1 0));
+            includeCut      true;      
+            includeInside   false;     
+            includeOutside  false;     
+            nearDistance    1e-30;    
+            curvature       -100;      
+        }
+    }
+    {
+        name        Inside;
+        type        cellSet;
+        action      new;
+        source      surfaceToCell;
+        sourceInfo
+        {
+            file            "constant/triSurface/cylinder.stl";
+            outsidePoints   ((-1 -1 0));
+            includeCut      false;      
+            includeInside   true;       
+            includeOutside  false;              
+            nearDistance    1e-30;    
+            curvature       -100;
+        }
+    }
+    {
+        name        Outside;
+        type        cellSet;
+        action      new;
+        source      surfaceToCell;
+        sourceInfo
+        {
+            file            "constant/triSurface/cylinder.stl";
+            outsidePoints   ((-1 -1 0));
+            includeCut      false;      
+            includeInside   false;
+            includeOutside  true;              
+            nearDistance    1e-30; 
+            curvature       -100;
+        }
+    }
+
+);
+
+
+// ************************************************************************* //

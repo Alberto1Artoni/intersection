@@ -1,0 +1,5 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+
+./Allclean
+rm -r logs/ constant/polyMesh polyMesh*/ > /dev/null 2>&1

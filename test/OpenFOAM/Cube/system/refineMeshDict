@@ -1,0 +1,47 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1906                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      refineMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Cells to refine; name of 'cellSet'
+set             wallRefinement; 
+
+coordinateSystem global;
+
+// Specifies 2 directions by a name and a vector. The normal direction is
+// calculated as tan1^tan2
+globalCoeffs
+{
+    tan1            ( 1 0 0 );
+    tan2            ( 0 1 0 );
+}
+
+// Specifies the direction to be refined by the name used above
+// To refine in the third direction, use the keyword 'normal'
+directions      
+(
+    tan1
+    tan2
+    normal
+);
+
+// Whether to use hex topology. This will
+// - if patchLocal: all cells on selected patch should be hex
+// - split all hexes in 2x2x2 through the middle of edges.
+useHexTopology  yes; 
+geometricCut     no;
+
+// Write meshes from intermediate steps
+writeMesh       no;

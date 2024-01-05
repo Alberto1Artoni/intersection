@@ -1,0 +1,164 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1906                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pisoFoam;
+
+startFrom       startTime;
+
+startTime       0.275;
+
+stopAt          endTime;
+
+endTime         0.3;
+
+deltaT          2e-6; // urca
+
+writeControl    timeStep;
+
+writeInterval   1250;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions{
+     turbulenceFields1
+     {
+         //// Mandatory entries (unmodifiable)
+         type            turbulenceFields;
+         libs            ("libfieldFunctionObjects.so");
+ //
+         writeControl    writeTime;
+         // Mandatory entries (runtime modifiable)
+         // Either field or fields entries
+         fields          (k);    // energy, scales
+     }
+
+     fieldAverage1
+     {
+         type            fieldAverage;
+         libs            ("libfieldFunctionObjects.so");
+         timeStart       0.08; // don't start right away
+         timeEnd         0.32; // end at the end
+         writeControl    writeTime;
+ 
+         fields
+         (
+             U
+             {
+               mean        on;
+                 prime2Mean  on;
+                 base        time;
+             }
+ //
+             p
+             {
+                 mean        on;
+                 prime2Mean  on;
+                 base        time;
+             }
+         );
+     }
+
+     yPlus1
+     {
+        type            yPlus;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
+     }
+     
+    Q1
+    {
+        // Mandatory entries (unmodifiable)
+        type            Q;
+        libs            ("libfieldFunctionObjects.so");
+        executeControl  writeTime;
+        executeInterval 1;
+        writeControl    writeTime;
+        writeInterval   1;
+    }
+
+    vorticity
+    {
+        // Mandatory entries (unmodifiable)
+        type            vorticity;
+        libs            ("libfieldFunctionObjects.so");
+        executeControl  writeTime;
+        executeInterval 1;
+        writeControl    writeTime;
+        writeInterval   1;
+    }
+    probes
+    {
+        type            probes;
+        libs            ("libsampling.so");
+        writeControl    timeStep;
+        writeInterval   25;     
+
+        fields
+        (
+            p
+        );
+
+        probeLocations
+        (
+            (-0.05    0.0  0)
+            (-0.015   0.0  0)
+            (  0.0    0.05 0)
+            (  0.0    0.1  0)
+            (  0.25   0.05 0)
+            (  0.65   0.0  0)
+        );
+
+    }
+    Lighthill
+    {
+        // Mandatory entries (unmodifiable)
+        type            Lighthill;
+        libs            ("libuserfieldFunctionObjects.so");
+        executeControl  writeTime;
+        executeInterval 1;
+        writeControl    writeTime;
+        writeInterval   1;
+    }
+    #include "div"
+    divLighthill
+    {
+        // Mandatory entries (unmodifiable)
+        type            divLighthill;
+        libs            ("libuserfieldFunctionObjects.so");
+        executeControl  writeTime;
+        executeInterval 1;
+        writeControl    writeTime;
+        writeInterval   1;
+    }
+
+}
+
+
+
+// ************************************************************************* //

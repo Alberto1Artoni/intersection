@@ -1,0 +1,16 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+
+mkdir logs
+for i in 0.2
+do
+    echo "MESH: case with mesh length $i"
+    cp system/square.geo.template system/square.geo
+    sed -i "s/MESH_LC/$i/g" system/square.geo
+    ./Allrun
+    mkdir logs/"lc$i"
+    mv log.* logs/"lc$i"
+    mv constant/polyMesh "polyMesh$i"
+done
+
+rm -r VTK

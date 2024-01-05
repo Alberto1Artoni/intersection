@@ -1,0 +1,18 @@
+#!/bin/sh
+
+gmsh -3 -format msh2 system/square.geo > log.gmsh 2>&1
+gmshToFoam system/square.msh
+polyDualMesh 75 -overwrite
+
+mkdir constant/dualMesh > /dev/null 2>&1
+mv *.obj constant/dualMesh/
+
+setSet -batch system/setSetBatch
+subsetMesh c0 -overwrite -patch front
+combinePatchFaces 90 -overwrite -concaveAngle 180
+
+extrudeMesh
+#createPatch -overwrite
+transformPoints -translate "(0 0 -0.55)"
+
+#runApplication topoSet
