@@ -20,10 +20,10 @@ module MOD_INTERSECTION
 
         use fast_speed_polyhedron
         use intersectionCGAL_new
-
         use globalVariables, only : mpi_id, mpi_ierr, mpi_np
 
         implicit none
+include 'SPEED.MPI'
 
         integer*4 :: nb_elemAcu, nb_elemFlu
         type(polyhedron_fast), dimension(nb_elemAcu) :: acuPoly
@@ -34,6 +34,8 @@ module MOD_INTERSECTION
         real*8 :: xAmin, xAmax, xFmin, xFmax, &
                   yAmin, yAmax, yFmax, yFmin, &
                   zAmin, zAmax, zFmin, zFmax, toll
+
+        real*8 :: volume, vol
 
         logical   :: isIntersecting
         character*128  :: filename
@@ -49,6 +51,7 @@ module MOD_INTERSECTION
         end if
 
         temp = 0
+        volume = 0.0
 
         do jAcu= start, end
 
@@ -78,6 +81,10 @@ module MOD_INTERSECTION
                         write(filename,'(A,I0,A,I0,A)') './DUMP/acu', jAcu ,"_", jFlu, ".vtk"
                         temp = temp + 1
                         call EXPORT_VTK_POLYDATA_DATA_FAST(filename, outIntersection, jAcu, temp)
+
+                        call GET_POLY_VOLUME(outIntersection, vol)
+                        volume = volume + vol
+
                         call POLY_DESTROY_FAST(outIntersection)
                     endif
 
@@ -89,6 +96,10 @@ module MOD_INTERSECTION
         end do
 
         write(*,'(A1,I0,A2,A27)') "[",mpi_id,"] ","Intersection progress: done!"
+
+        call MPI_ALLREDUCE(MPI_IN_PLACE, volume, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD, mpi_ierr)
+
+        write(*,*) "Volume: ", volume
 
     end subroutine
 

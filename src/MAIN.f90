@@ -70,6 +70,7 @@ program MAIN
     endif
     call NAIVE_INTERSECTIONS(acousticPoly, acoustic%nb_elems, fluidPoly, fluid%nb_elems)
 
+
     ! DEALLOCATING
 
     ! RETURN
